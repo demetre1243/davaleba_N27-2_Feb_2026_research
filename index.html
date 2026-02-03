@@ -1,10 +1,473 @@
+<!--
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html>
 <body>
-$END$
+<h1>JavaScript HTML DOM</h1>
+<h2>The getElementById() Method</h2>
+
+<p id="demo"></p>
+
+<script>
+    // Access a paragraph Element
+    const myPara = document.getElementById("demo");
+
+    // Change the content of the Element
+    myPara.innerHTML = "Hello World!";
+</script>
+
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<body>
+<h1>JavaScript HTML DOM</h1>
+<h2>The querySelectorAll() Method</h2>
+
+<p class="demo">One</p>
+<p class="demo">Two</p>
+
+<script>
+// Access a paragraph Element
+const myItems = document.querySelectorAll(".demo");
+
+// Change the content of the Element
+myItems[0].innerHTML = "First";
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript HTML DOM</h2>
+<p>Finding HTML Elements Using <b>document.forms</b>.</p>
+
+<form id="frm1" action="/action_page.php">
+    First name: <input type="text" name="fname" value="Donald"><br>
+    Last name: <input type="text" name="lname" value="Duck"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<p>These are the values of each element in the form:</p>
+
+<p id="demo"></p>
+
+<script>
+    const x = document.forms["frm1"];
+    let text = "";
+    for (let i = 0; i < x.length ;i++) {
+        text += x.elements[i].value + "<br>";
+    }
+    document.getElementById("demo").innerHTML = text;
+</script>
+
+</body>
+</html>
+<form name="my-form">
+    <div class="article">Article</div>
+    <div class="long article">Long article</div>
+</form>
+
+<script>
+    // find by name attribute
+    let form = document.getElementsByName('my-form')[0];
+
+    // find by class inside the form
+    let articles = form.getElementsByClassName('article');
+    alert(articles.length); // 2, found two elements with class "article"
+</script>
+<div id="elem">
+    <div id="elem-content">Element</div>
+</div>
+
+<script>
+    // get the element
+    let elem = document.getElementById('elem');
+
+    // make its background red
+    elem.style.background = 'red';
+</script>
+<ul>
+    <li>The</li>
+    <li>test</li>
+</ul>
+<ul>
+    <li>has</li>
+    <li>passed</li>
+</ul>
+<script>
+    let elements = document.querySelectorAll('ul > li:last-child');
+
+    for (let elem of elements) {
+        alert(elem.innerHTML); // "test", "passed"
+    }
+</script>
+<a href="http://example.com/file.zip">...</a>
+<a href="http://ya.ru">...</a>
+
+<script>
+    // can be any collection instead of document.body.children
+    for (let elem of document.body.children) {
+        if (elem.matches('a[href$="zip"]')) {
+            alert("The archive reference: " + elem.href );
+        }
+    }
+</script>
+<h1>Contents</h1>
+
+<div class="contents">
+    <ul class="book">
+        <li class="chapter">Chapter 1</li>
+        <li class="chapter">Chapter 2</li>
+    </ul>
+</div>
+
+<script>
+    let chapter = document.querySelector('.chapter'); // LI
+
+    alert(chapter.closest('.book')); // UL
+    alert(chapter.closest('.contents')); // DIV
+
+    alert(chapter.closest('h1')); // null (because h1 is not an ancestor)
+</script>
+<table id="table">
+    <tr>
+        <td>Your age:</td>
+
+        <td>
+            <label>
+                <input type="radio" name="age" value="young" checked> less than 18
+            </label>
+            <label>
+                <input type="radio" name="age" value="mature"> from 18 to 50
+            </label>
+            <label>
+                <input type="radio" name="age" value="senior"> more than 60
+            </label>
+        </td>
+    </tr>
+</table>
+
+<script>
+    let inputs = table.getElementsByTagName('input');
+
+    for (let input of inputs) {
+        alert( input.value + ': ' + input.checked );
+    }
+</script>
+<form name="my-form">
+    <div class="article">Article</div>
+    <div class="long article">Long article</div>
+</form>
+
+<script>
+    // find by name attribute
+    let form = document.getElementsByName('my-form')[0];
+
+    // find by class inside the form
+    let articles = form.getElementsByClassName('article');
+    alert(articles.length); // 2, found two elements with class "article"
+</script>
+<div>First div</div>
+
+<script>
+    let divs = document.getElementsByTagName('div');
+    alert(divs.length); // 1
+</script>
+
+<div>Second div</div>
+
+<script>
+    alert(divs.length); // 2
+</script>
+<div>First div</div>
+
+<script>
+    let divs = document.querySelectorAll('div');
+    alert(divs.length); // 1
+</script>
+
+<div>Second div</div>
+
+<script>
+    alert(divs.length); // 1
+</script>
+<body>
+<script>
+    let elem = document.body;
+
+    // let's examine: what type of node is in elem?
+    alert(elem.nodeType); // 1 => element
+
+    // and its first child is...
+    alert(elem.firstChild.nodeType); // 3 => text
+
+    // for the document object, the type is 9
+    alert( document.nodeType ); // 9
+</script>
+</body>
+<body>
+<script>
+    // for comment
+    alert( document.body.firstChild.tagName ); // undefined (not an element)
+    alert( document.body.firstChild.nodeName ); // #comment
+
+    // for document
+    alert( document.tagName ); // undefined (not an element)
+    alert( document.nodeName ); // #document
+</script>
+</body>
+<div>Hello, world!</div>
+
+<script>
+    let div = document.querySelector('div');
+
+    // replace div.outerHTML with <p>...</p>
+    div.outerHTML = '<p>A new element</p>'; // (*)
+
+    // Wow! 'div' is still the same!
+    alert(div.outerHTML); // <div>Hello, world!</div> (**)
+</script>
+<div id="news">
+    <h1>Headline!</h1>
+    <p>Martians attack people!</p>
+</div>
+
+<script>
+    // Headline! Martians attack people!
+    alert(news.textContent);
+</script>
+<body id="test" something="non-standard">
+<script>
+    alert(document.body.id); // test
+    // non-standard attribute does not yield a property
+    alert(document.body.something); // undefined
+</script>
+</body>
+<body id="body" type="...">
+<input id="input" type="text">
+<script>
+    alert(input.type); // text
+    alert(body.type); // undefined: DOM property not created, because it's non-standard
+</script>
+</body>
+<body>
+<div id="elem" about="Elephant"></div>
+
+<script>
+    alert( elem.getAttribute('About') ); // (1) 'Elephant', reading
+
+    elem.setAttribute('Test', 123); // (2), writing
+
+    alert( elem.outerHTML ); // (3), see if the attribute is in HTML (yes)
+
+    for (let attr of elem.attributes) { // (4) list all
+        alert( `${attr.name} = ${attr.value}` );
+    }
+</script>
+</body>
+<input>
+
+<script>
+    let input = document.querySelector('input');
+
+    // attribute => property
+    input.setAttribute('value', 'text');
+    alert(input.value); // text
+
+    // NOT property => attribute
+    input.value = 'newValue';
+    alert(input.getAttribute('value')); // text (not updated!)
+</script>
+<div id="div" style="color:red;font-size:120%">Hello</div>
+
+<script>
+    // string
+    alert(div.getAttribute('style')); // color:red;font-size:120%
+
+    // object
+    alert(div.style); // [object CSSStyleDeclaration]
+    alert(div.style.color); // red
+</script>
+<div show-info="name"></div>
+<div show-info="age"></div>
+
+<script>
+    // the code finds an element with the mark and shows what's requested
+    let user = {
+        name: "Pete",
+        age: 25
+    };
+
+    for(let div of document.querySelectorAll('[show-info]')) {
+        // insert the corresponding info into the field
+        let field = div.getAttribute('show-info');
+        div.innerHTML = user[field]; // first Pete into "name", then 25 into "age"
+    }
+</script>
+<style>
+    /* styles rely on the custom attribute "order-state" */
+    .order[order-state="new"] {
+        color: green;
+    }
+
+    .order[order-state="pending"] {
+        color: blue;
+    }
+
+    .order[order-state="canceled"] {
+        color: red;
+    }
+</style>
+
+<div class="order" order-state="new">
+    A new order.
+</div>
+
+<div class="order" order-state="pending">
+    A pending order.
+</div>
+
+<div class="order" order-state="canceled">
+    A canceled order.
+</div>
+<style>
+    .order[data-order-state="new"] {
+        color: green;
+    }
+
+    .order[data-order-state="pending"] {
+        color: blue;
+    }
+
+    .order[data-order-state="canceled"] {
+        color: red;
+    }
+</style>
+
+<div id="order" class="order" data-order-state="new">
+    A new order.
+</div>
+
+<script>
+    // read
+    alert(order.dataset.orderState); // new
+
+    // modify
+    order.dataset.orderState = "pending"; // (*)
+</script>
+<a name="list">the list</a>
+<ul>
+    <li><a href="http://google.com">http://google.com</a></li>
+    <li><a href="/tutorial">/tutorial.html</a></li>
+    <li><a href="local/path">local/path</a></li>
+    <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+    <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+    <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+</ul>
+
+<script>
+    // setting style for a single link
+    let link = document.querySelector('a');
+    link.style.color = 'orange';
+</script>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+<h1>Hello, world!</h1>
+<p>This is a paragraph.</p>
+</body>
+</html>
+<html>
+<body>
+
+<p id="p1">Hello World!</p>
+
+<script>
+    document.getElementById("p1").innerHTML = "New text!";
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="id01">Old Heading</h1>
+
+<script>
+    const element = document.getElementById("id01");
+    element.innerHTML = "New Heading";
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<img id="myImage" src="smiley.gif">
+
+<script>
+    document.getElementById("myImage").src = "landscape.jpg";
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Bla bla bla</p>
+
+<script>
+    document.write(Date());
+</script>
+
+<p>Bla bla bla</p>
+
+</body>
+</html>
+<html>
+<body>
+
+<p id="p2">Hello World!</p>
+
+<script>
+    document.getElementById("p2").style.color = "blue";
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="id1">My Heading 1</h1>
+
+<button type="button"
+        onclick="document.getElementById('id1').style.color = 'red'">
+    Click Me!</button>
+
+</body>
+</html>
+<html lang="en">
+<head> </head>
+<body>
+<script>
+    // create a couple of elements in an otherwise empty HTML page
+    const heading = document.createElement("h1");
+    const headingText = document.createTextNode("Big Head!");
+    heading.appendChild(headingText);
+    document.body.appendChild(heading);
+</script>
+</body>
+</html>
+-->
